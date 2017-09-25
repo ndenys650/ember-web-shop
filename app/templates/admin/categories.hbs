@@ -1,7 +1,24 @@
 <h1>Categories Admin/Page</h1>
-{{!-- input modeled data here --}}
+
+{{!-- create form for adding data --}}
+<form>
+	<label>ID:</label>
+		{{input value=newCategoryId}}
+	<label>NAME:</label>
+		{{input value=newCategoryName}}
+	<button type="submit" {{action 'addNewCategory' newCategoryId newCategoryName}}>Add</button>
+</form>
+
+
+{{!-- input modeled data here, add a delete button --}}
 <ul>
 	{{#each model as |category|}}
-		<li>ID: {{category.id}}, NAME: {{category.name}}</li>
+		<li>
+		ID: {{category.id}}, NAME: {{category.name}}
+		<button {{action 'deleteCategory' category}}>Delete</button>
+		</li>
 	{{/each}}
 </ul>
+
+{{!-- count how many categories, go figure --}}
+Category Counter: {{model.length}}

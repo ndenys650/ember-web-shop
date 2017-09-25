@@ -276,6 +276,17 @@ define('web-shop/routes/admin/categories', ['exports'], function (exports) {
 				id: 2,
 				name: 'Second Category'
 			}];
+		},
+
+
+		// recieve action from Add and Delete buttons on categories route
+		actions: {
+			addNewCategory: function addNewCategory(id, name) {
+				this.controller.get('model').pushObject({ id: id, name: name });
+			},
+			deleteCategory: function deleteCategory(category) {
+				this.controller.get('model').removeObject(category);
+			}
 		}
 	});
 });
@@ -306,7 +317,7 @@ define("web-shop/templates/admin/categories", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "iCA3YnKo", "block": "{\"symbols\":[\"category\"],\"statements\":[[6,\"h1\"],[7],[0,\"Categories Admin/Page\"],[8],[0,\"\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"\\t\\t\"],[6,\"li\"],[7],[0,\"ID: \"],[1,[19,1,[\"id\"]],false],[0,\", NAME: \"],[1,[19,1,[\"name\"]],false],[8],[0,\"\\n\"]],\"parameters\":[1]},null],[8]],\"hasEval\":false}", "meta": { "moduleName": "web-shop/templates/admin/categories.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "hNxOsM+L", "block": "{\"symbols\":[\"category\"],\"statements\":[[6,\"h1\"],[7],[0,\"Categories Admin/Page\"],[8],[0,\"\\n\\n\"],[6,\"form\"],[7],[0,\"\\n\\t\"],[6,\"label\"],[7],[0,\"ID:\"],[8],[0,\"\\n\\t\\t\"],[1,[25,\"input\",null,[[\"value\"],[[19,0,[\"newCategoryId\"]]]]],false],[0,\"\\n\\t\"],[6,\"label\"],[7],[0,\"NAME:\"],[8],[0,\"\\n\\t\\t\"],[1,[25,\"input\",null,[[\"value\"],[[19,0,[\"newCategoryName\"]]]]],false],[0,\"\\n\\t\"],[6,\"button\"],[9,\"type\",\"submit\"],[3,\"action\",[[19,0,[]],\"addNewCategory\",[19,0,[\"newCategoryId\"]],[19,0,[\"newCategoryName\"]]]],[7],[0,\"Add\"],[8],[0,\"\\n\"],[8],[0,\"\\n\\n\\n\"],[6,\"ul\"],[7],[0,\"\\n\"],[4,\"each\",[[19,0,[\"model\"]]],null,{\"statements\":[[0,\"\\t\\t\"],[6,\"li\"],[7],[0,\"\\n\\t\\tID: \"],[1,[19,1,[\"id\"]],false],[0,\", NAME: \"],[1,[19,1,[\"name\"]],false],[0,\"\\n\\t\\t\"],[6,\"button\"],[3,\"action\",[[19,0,[]],\"deleteCategory\",[19,1,[]]]],[7],[0,\"Delete\"],[8],[0,\"\\n\\t\\t\"],[8],[0,\"\\n\"]],\"parameters\":[1]},null],[8],[0,\"\\n\\n\"],[0,\"Category Counter: \"],[1,[20,[\"model\",\"length\"]],false]],\"hasEval\":false}", "meta": { "moduleName": "web-shop/templates/admin/categories.hbs" } });
 });
 define("web-shop/templates/application", ["exports"], function (exports) {
   "use strict";

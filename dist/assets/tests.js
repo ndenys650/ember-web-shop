@@ -5,6 +5,11 @@ define('web-shop/tests/app.lint-test', [], function () {
 
   QUnit.module('ESLint | app');
 
+  QUnit.test('adapters/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'adapters/application.js should pass ESLint\n\n');
+  });
+
   QUnit.test('app.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'app.js should pass ESLint\n\n');
@@ -44,6 +49,9 @@ define('web-shop/tests/helpers/destroy-app', ['exports'], function (exports) {
   exports.default = destroyApp;
   function destroyApp(application) {
     Ember.run(application, 'destroy');
+    if (window.server) {
+      window.server.shutdown();
+    }
   }
 });
 define('web-shop/tests/helpers/module-for-acceptance', ['exports', 'qunit', 'web-shop/tests/helpers/start-app', 'web-shop/tests/helpers/destroy-app'], function (exports, _qunit, _startApp, _destroyApp) {
@@ -149,6 +157,11 @@ define('web-shop/tests/tests.lint-test', [], function () {
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/adapters/application-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/application-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/models/category-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/models/category-test.js should pass ESLint\n\n');
@@ -162,6 +175,20 @@ define('web-shop/tests/tests.lint-test', [], function () {
   QUnit.test('unit/routes/admin/categories-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/admin/categories-test.js should pass ESLint\n\n');
+  });
+});
+define('web-shop/tests/unit/adapters/application-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('adapter:application', 'Unit | Adapter | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['serializer:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var adapter = this.subject();
+    assert.ok(adapter);
   });
 });
 define('web-shop/tests/unit/models/category-test', ['ember-qunit'], function (_emberQunit) {

@@ -2,6 +2,17 @@
 
 
 
+define('web-shop/adapters/application', ['exports', 'ember-data'], function (exports, _emberData) {
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = _emberData.default.JSONAPIAdapter.extend({
+
+		namespace: 'api'
+	});
+});
 define('web-shop/app', ['exports', 'web-shop/resolver', 'ember-load-initializers', 'web-shop/config/environment'], function (exports, _resolver, _emberLoadInitializers, _environment) {
   'use strict';
 
@@ -116,6 +127,60 @@ define('web-shop/initializers/data-adapter', ['exports'], function (exports) {
     initialize: function initialize() {}
   };
 });
+define('web-shop/initializers/ember-cli-mirage', ['exports', 'ember-cli-mirage/utils/read-modules', 'web-shop/config/environment', 'web-shop/mirage/config', 'ember-cli-mirage/server', 'lodash/assign'], function (exports, _readModules, _environment, _config, _server, _assign2) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.startMirage = startMirage;
+  var getWithDefault = Ember.getWithDefault;
+  exports.default = {
+    name: 'ember-cli-mirage',
+    initialize: function initialize(application) {
+      if (arguments.length > 1) {
+        // Ember < 2.1
+        var container = arguments[0],
+            application = arguments[1];
+      }
+
+      if (_shouldUseMirage(_environment.default.environment, _environment.default['ember-cli-mirage'])) {
+        startMirage(_environment.default);
+      }
+    }
+  };
+  function startMirage() {
+    var env = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _environment.default;
+
+    var environment = env.environment;
+    var discoverEmberDataModels = getWithDefault(env['ember-cli-mirage'] || {}, 'discoverEmberDataModels', true);
+    var modules = (0, _readModules.default)(env.modulePrefix);
+    var options = (0, _assign2.default)(modules, { environment: environment, baseConfig: _config.default, testConfig: _config.testConfig, discoverEmberDataModels: discoverEmberDataModels });
+
+    return new _server.default(options);
+  }
+
+  function _shouldUseMirage(env, addonConfig) {
+    if (typeof FastBoot !== 'undefined') {
+      return false;
+    }
+    var userDeclaredEnabled = typeof addonConfig.enabled !== 'undefined';
+    var defaultEnabled = _defaultEnabled(env, addonConfig);
+
+    return userDeclaredEnabled ? addonConfig.enabled : defaultEnabled;
+  }
+
+  /*
+    Returns a boolean specifying the default behavior for whether
+    to initialize Mirage.
+  */
+  function _defaultEnabled(env, addonConfig) {
+    var usingInDev = env === 'development' && !addonConfig.usingProxy;
+    var usingInTest = env === 'test';
+
+    return usingInDev || usingInTest;
+  }
+});
 define('web-shop/initializers/ember-data', ['exports', 'ember-data/setup-container', 'ember-data'], function (exports, _setupContainer) {
   'use strict';
 
@@ -223,6 +288,74 @@ define("web-shop/instance-initializers/ember-data", ["exports", "ember-data/inst
     name: "ember-data",
     initialize: _initializeStoreService.default
   };
+});
+define('web-shop/mirage/config', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  exports.default = function () {
+
+    // These comments are here to help you get started. Feel free to delete them.
+
+    /*
+      Config (with defaults).
+       Note: these only affect routes defined *after* them!
+    */
+
+    this.urlPrefix = ''; // make this `http://localhost:8080`, for example, if your API is on a different server
+    this.namespace = '/api'; // make this `/api`, for example, if your API is namespaced
+    this.timing = 400; // delay for each request, automatically set to 0 during testing
+
+    this.get('/categories', function (schema, request) {
+      return schema.categories.all();
+    });
+
+    /*
+      Shorthand cheatsheet:
+       this.get('/posts');
+      this.post('/posts');
+      this.get('/posts/:id');
+      this.put('/posts/:id'); // or this.patch
+      this.del('/posts/:id');
+       http://www.ember-cli-mirage.com/docs/v0.3.x/shorthands/
+    */
+  };
+});
+define('web-shop/mirage/models/category', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _emberCliMirage.Model.extend({});
+});
+define("web-shop/mirage/scenarios/default", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  exports.default = function () /* server */{
+
+    /*
+      Seed your development database using your factories.
+      This data will not be loaded in your tests.
+    */
+
+    // server.createList('post', 10);
+  };
+});
+define('web-shop/mirage/serializers/application', ['exports', 'ember-cli-mirage'], function (exports, _emberCliMirage) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _emberCliMirage.JSONAPISerializer.extend({});
 });
 define('web-shop/models/category', ['exports', 'ember-data'], function (exports, _emberData) {
   'use strict';
@@ -341,6 +474,31 @@ define("web-shop/templates/index", ["exports"], function (exports) {
     value: true
   });
   exports.default = Ember.HTMLBars.template({ "id": "0AoboZ4N", "block": "{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Home Page\"],[8]],\"hasEval\":false}", "meta": { "moduleName": "web-shop/templates/index.hbs" } });
+});
+define('web-shop/tests/mirage/mirage.lint-test', [], function () {
+  'use strict';
+
+  QUnit.module('ESLint | mirage');
+
+  QUnit.test('mirage/config.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'mirage/config.js should pass ESLint\n\n15:36 - \'request\' is defined but never used. (no-unused-vars)');
+  });
+
+  QUnit.test('mirage/models/category.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/models/category.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('mirage/scenarios/default.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/scenarios/default.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('mirage/serializers/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'mirage/serializers/application.js should pass ESLint\n\n');
+  });
 });
 
 

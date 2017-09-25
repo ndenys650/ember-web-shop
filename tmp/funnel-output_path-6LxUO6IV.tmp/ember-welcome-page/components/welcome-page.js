@@ -1,1 +1,0 @@
-/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/funnel-input_base_path-UX3c9aeN.tmp/components/welcome-page.js

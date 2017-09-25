@@ -1,1 +1,0 @@
-export default Ember.HTMLBars.template({"id":"NFmwiXeg","block":"{\"symbols\":[],\"statements\":[[6,\"h1\"],[7],[0,\"Categories Admin/Page\"],[8],[0,\"\\n\\n\"],[1,[18,\"outlet\"],false]],\"hasEval\":false}","meta":{"moduleName":"web-shop/templates/admin/categories.hbs"}});

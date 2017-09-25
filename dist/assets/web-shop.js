@@ -224,6 +224,16 @@ define("web-shop/instance-initializers/ember-data", ["exports", "ember-data/inst
     initialize: _initializeStoreService.default
   };
 });
+define('web-shop/models/category', ['exports', 'ember-data'], function (exports, _emberData) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _emberData.default.Model.extend({
+    name: _emberData.default.attr('string')
+  });
+});
 define('web-shop/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
   'use strict';
 
@@ -269,23 +279,20 @@ define('web-shop/routes/admin/categories', ['exports'], function (exports) {
 	});
 	exports.default = Ember.Route.extend({
 		model: function model() {
-			return [{
-				id: 1,
-				name: 'First Category'
-			}, {
-				id: 2,
-				name: 'Second Category'
-			}];
+			// return data from database
+			return this.store.findAll('category');
 		},
 
 
 		// recieve action from Add and Delete buttons on categories route
 		actions: {
 			addNewCategory: function addNewCategory(id, name) {
-				this.controller.get('model').pushObject({ id: id, name: name });
+				// add data from entered data model into database
+				this.store.createRecord('category', { id: id, name: name }).save();
 			},
 			deleteCategory: function deleteCategory(category) {
-				this.controller.get('model').removeObject(category);
+				// delete database record
+				category.destroyRecord();
 			}
 		}
 	});

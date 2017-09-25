@@ -10,6 +10,11 @@ define('web-shop/tests/app.lint-test', [], function () {
     assert.ok(true, 'app.js should pass ESLint\n\n');
   });
 
+  QUnit.test('models/category.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/category.js should pass ESLint\n\n');
+  });
+
   QUnit.test('resolver.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'resolver.js should pass ESLint\n\n');
@@ -144,6 +149,11 @@ define('web-shop/tests/tests.lint-test', [], function () {
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/models/category-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/category-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/routes/admin-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/admin-test.js should pass ESLint\n\n');
@@ -152,6 +162,20 @@ define('web-shop/tests/tests.lint-test', [], function () {
   QUnit.test('unit/routes/admin/categories-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/admin/categories-test.js should pass ESLint\n\n');
+  });
+});
+define('web-shop/tests/unit/models/category-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForModel)('category', 'Unit | Model | category', {
+    // Specify the other units that are required for this test.
+    needs: []
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var model = this.subject();
+    // let store = this.store();
+    assert.ok(!!model);
   });
 });
 define('web-shop/tests/unit/routes/admin-test', ['ember-qunit'], function (_emberQunit) {

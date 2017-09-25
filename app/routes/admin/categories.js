@@ -3,27 +3,21 @@ import Ember from 'ember';
 export default Ember.Route.extend({
 
 	model() {
-		return [
-			{ 
-				id: 1,
-				name: 'First Category'
-			},
-			{
-				id: 2,
-				name: 'Second Category'
-			}
-		];
+		// return data from database
+		return this.store.findAll('category');
 	},
 
 	// recieve action from Add and Delete buttons on categories route
 	actions: {
 
 		addNewCategory(id, name) {
-			this.controller.get('model').pushObject({ id, name });
+			// add data from entered data model into database
+			this.store.createRecord('category', {id, name}).save();
 		},
 
 		deleteCategory(category) {
-			this.controller.get('model').removeObject(category);
+			// delete database record
+			category.destroyRecord();
 		}
 
 	}

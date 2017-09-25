@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/funnel-input_base_path-umOz3hNN.tmp/resolvers/classic/container-debug-adapter.js

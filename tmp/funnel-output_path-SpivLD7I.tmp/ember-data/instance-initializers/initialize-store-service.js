@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/funnel-input_base_path-oYvmI2SQ.tmp/instance-initializers/initialize-store-service.js

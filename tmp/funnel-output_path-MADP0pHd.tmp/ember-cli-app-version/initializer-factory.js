@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/funnel-input_base_path-8p7BHxU2.tmp/initializer-factory.js

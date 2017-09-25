@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/funnel-input_base_path-gc2o5Gpr.tmp/lib/system/inflector.js

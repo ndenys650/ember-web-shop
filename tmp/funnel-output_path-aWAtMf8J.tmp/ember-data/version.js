@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/creator-output_path-NEBnpI67.tmp/version.js

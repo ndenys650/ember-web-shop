@@ -1,0 +1,1 @@
+/Users/nathanaeldenys/Documents/Ember/web-shop/tmp/broccoli_merge_trees-input_base_path-dUm2c3y7.tmp/1/web-shop/resolver.js

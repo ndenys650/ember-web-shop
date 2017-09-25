@@ -1,24 +1,56 @@
-<h1>Categories Admin/Page</h1>
+<h1>Admin - Categories</h1>
 
-{{!-- create form for adding data --}}
-<form>
-	<label>ID:</label>
-		{{input value=newCategoryId}}
-	<label>NAME:</label>
-		{{input value=newCategoryName}}
-	<button type="submit" {{action 'addNewCategory' newCategoryId newCategoryName}}>Add</button>
-</form>
+{{!-- create form for adding data using bootstrap --}}
+  <div class="well well-sm">
+    <form class="form-inline" {{action 'addNewCategory' newCategory on='submit'}}>
+      <div class="form-group">
+        <label for="new-category">New category:</label>
+        {{input type="text" class="form-control" id="new-category" placeholder="Category name" value=newCategory.name}}
+      </div>
+      <button type="submit" class="btn btn-default">Add</button>
+    </form>
+  </div>
+
+  {{#if newCategory.isError}}
+    Error!!
+    {{#each newCategory.errors as |error|}}
+      {{error}}
+    {{/each}}
+  {{/if}}
 
 
-{{!-- input modeled data here, add a delete button --}}
-<ul>
-	{{#each model as |category|}}
-		<li>
-		ID: {{category.id}}, NAME: {{category.name}}
-		<button {{action 'deleteCategory' category}}>Delete</button>
-		</li>
-	{{/each}}
-</ul>
+{{!-- input modeled data here, add a delete button, created table with bootstrap --}}
+<table class="table table-striped">
+  <caption>List of categories</caption>
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each model as |category|}}
+    {{#unless category.isNew}}
+      <tr>
+        <td>{{category.id}}</td>
+        <td {{action 'editCategory' category}}>
+          {{#if category.isEditing}}
+            {{input value=category.name}}
+            <button {{action 'updateCategory' category}}>Save</button>
+          {{else}}
+            {{category.name}}
+          {{/if}}
+        </td>
+        <td>
+          <button class="btn btn-xs btn-danger" {{action 'deleteCategory' category}}>Del</button>
+          <button class="btn btn-xs btn-success" {{action 'editCategory' category}}>Edit</button>
+        </td>
+      </tr>
+    {{/unless}}
+  {{/each}}
+  </tbody>
+</table>
 
 {{!-- count how many categories, go figure --}}
-Category Counter: {{model.length}}
+Number of categories: {{model.length}}

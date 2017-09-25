@@ -7,18 +7,38 @@ export default Ember.Route.extend({
 		return this.store.findAll('category');
 	},
 
+	setupController(controller, model) {
+		this._super(controller, model);
+
+		controller.set('newCategory', this.store.createRecord('category'));
+	},
+
 	// recieve action from Add and Delete buttons on categories route
 	actions: {
 
-		addNewCategory(id, name) {
-			// add data from entered data model into database
-			this.store.createRecord('category', {id, name}).save();
-		},
+	    addNewCategory(newCategory) {
+	      newCategory.save().then(
+	        category => {
+	          console.info('Response:', category);
+	          this.controller.set('newCategory', this.store.createRecord('category'));
+	        },
+	        error => {
+	          console.error('Error from server:', error);
+	        });
+	    },
 
-		deleteCategory(category) {
-			// delete database record
-			category.destroyRecord();
-		}
+	    editCategory(category) {
+	      category.set('isEditing', true);
+	    },
 
+	    updateCategory(category) {
+	      category.save().then(
+	        category => category.set('isEditing', false)
+	      );
+	    },
+
+	    deleteCategory(category) {
+	      category.destroyRecord();
+	    }
 	}
 });

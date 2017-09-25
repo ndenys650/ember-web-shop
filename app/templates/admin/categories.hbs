@@ -1,3 +1,7 @@
 <h1>Categories Admin/Page</h1>
-
-{{outlet}}
+{{!-- input modeled data here --}}
+<ul>
+	{{#each model as |category|}}
+		<li>ID: {{category.id}}, NAME: {{category.name}}</li>
+	{{/each}}
+</ul>
